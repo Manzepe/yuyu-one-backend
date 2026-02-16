@@ -10,11 +10,10 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 })
 
-/* RUTA CORRECTA */
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'))
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 app.get('/api/beneficios', async (req, res) => {
