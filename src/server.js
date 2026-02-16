@@ -27,38 +27,6 @@ app.get('/api/beneficios', async (req, res) => {
   }
 })
 
-async function initDB() {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS beneficios (
-      id SERIAL PRIMARY KEY,
-      nombre TEXT NOT NULL,
-      activo BOOLEAN DEFAULT true
-    )
-  `)
-
-  const check = await pool.query('SELECT COUNT(*) FROM beneficios')
-
-  if (check.rows[0].count === '0') {
-    await pool.query(`
-      INSERT INTO beneficios (nombre) VALUES
-      ('Seguro de Pantalla'),
-      ('Descuentos Locales'),
-      ('Ahorro en Viajes')
-    `)
-  }
-}
-
-initDB()
-
 app.listen(PORT, () => {
   console.log('Servidor corriendo en puerto ' + PORT)
-})
-app.get('/api/seed', async (req, res) => {
-  await pool.query(`
-    INSERT INTO beneficios (nombre, activo) VALUES
-    ('Seguro de Pantalla', true),
-    ('Descuentos Locales', true),
-    ('Ahorro en Viajes', true)
-  `)
-  res.send('Datos insertados')
 })
