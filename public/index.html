@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Yuyu One</title>
+
+
+
+  <style>
+
+    body {
+
+      font-family: Arial, sans-serif;
+
+      background: #f4f6f8;
+
+      margin: 0;
+
+      padding: 40px;
+
+      text-align: center;
+
+    }
+
+
+
+    .card {
+
+      background: white;
+
+      max-width: 500px;
+
+      margin: auto;
+
+      padding: 30px;
+
+      border-radius: 12px;
+
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    }
+
+
+
+    h1 {
+
+      margin-bottom: 25px;
+
+    }
+
+
+
+    .beneficio {
+
+      background: #eef3ff;
+
+      padding: 12px;
+
+      margin: 10px 0;
+
+      border-radius: 8px;
+
+      font-weight: 500;
+
+    }
+
+
+
+    .loading {
+
+      color: gray;
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="card">
+
+  <h1>Beneficios Yuyu One</h1>
+
+  <div id="contenido" class="loading">Cargando beneficios...</div>
+
+</div>
+
+
+
+<script>
+
+fetch("https://yuyu-one-backend.onrender.com/api/beneficios")
+
+.then(res => res.json())
+
+.then(data => {
+
+  const cont = document.getElementById("contenido");
+
+  cont.innerHTML = "";
+
+
+
+  data.forEach(b => {
+
+    const div = document.createElement("div");
+
+    div.className = "beneficio";
+
+    div.textContent = b.nombre;
+
+    cont.appendChild(div);
+
+  });
+
+})
+
+.catch(() => {
+
+  document.getElementById("contenido").innerHTML = "Error cargando datos";
+
+});
+
+</script>
+
+
+
+</body>
+
+</html>
