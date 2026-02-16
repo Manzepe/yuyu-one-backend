@@ -1,12 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Yuyu One</title>
+</head>
+
+<body>
+
+<h2>Beneficios</h2>
+
+<div id="contenido">Cargando...</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
   const cont = document.getElementById("contenido")
-
-  if (!cont) {
-    console.error("ERROR: no existe #contenido en el HTML")
-    return
-  }
 
   fetch("/api/beneficios")
     .then(res => res.json())
@@ -16,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       data.forEach(b => {
         const div = document.createElement("div")
-        div.className = "beneficio"
         div.textContent = b.nombre
         cont.appendChild(div)
       })
@@ -28,3 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 })
 </script>
+
+</body>
+</html>
