@@ -1,5 +1,8 @@
 <script>
-fetch("/api/beneficios")
+
+const API = "https://yuyu-one-backend.onrender.com/api/beneficios"
+
+fetch(API)
 .then(res => res.json())
 .then(data => {
 
@@ -11,7 +14,6 @@ fetch("/api/beneficios")
     div.className = "beneficio"
     div.textContent = b.nombre
 
-    // FUNCIONALIDAD REAL
     div.onclick = () => {
       alert("Beneficio seleccionado:\n\n" + b.nombre)
     }
@@ -20,7 +22,9 @@ fetch("/api/beneficios")
   })
 
 })
-.catch(() => {
+.catch(err => {
+  console.error(err)
   document.getElementById("contenido").innerText = "Error cargando beneficios"
 })
+
 </script>
