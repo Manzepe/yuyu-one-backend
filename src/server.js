@@ -10,14 +10,13 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 })
 
-/* CARPETA PUBLIC CORRECTA */
+/* 👇 RUTA CORRECTA DEL PUBLIC */
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'))
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
-/* API BENEFICIOS */
 app.get('/api/beneficios', async (req, res) => {
   try {
     const result = await pool.query(
@@ -29,7 +28,6 @@ app.get('/api/beneficios', async (req, res) => {
   }
 })
 
-/* RESET BASE */
 app.get('/api/reset', async (req, res) => {
   try {
     await pool.query('DELETE FROM beneficios')
