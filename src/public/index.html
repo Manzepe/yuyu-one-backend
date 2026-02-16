@@ -1,18 +1,31 @@
 <script>
-fetch("/api/beneficios")
-  .then(res => res.json())
-  .then(data => {
-    const cont = document.getElementById("contenido")
-    cont.innerHTML = ""
+document.addEventListener("DOMContentLoaded", () => {
 
-    data.forEach(b => {
-      const div = document.createElement("div")
-      div.className = "beneficio"
-      div.textContent = b.nombre
-      cont.appendChild(div)
+  const cont = document.getElementById("contenido")
+
+  if (!cont) {
+    console.error("No existe el elemento #contenido")
+    return
+  }
+
+  fetch("/api/beneficios")
+    .then(res => res.json())
+    .then(data => {
+
+      cont.innerHTML = ""
+
+      data.forEach(b => {
+        const div = document.createElement("div")
+        div.className = "beneficio"
+        div.textContent = b.nombre
+        cont.appendChild(div)
+      })
+
     })
-  })
-  .catch(() => {
-    document.getElementById("contenido").innerText = "Error cargando beneficios"
-  })
+    .catch(err => {
+      console.error(err)
+      cont.innerText = "Error cargando beneficios"
+    })
+
+})
 </script>
