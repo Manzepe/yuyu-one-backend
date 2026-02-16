@@ -10,12 +10,14 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 })
 
-app.use(express.static(path.join(__dirname, '../public')))
+/* CARPETA PUBLIC CORRECTA */
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'))
+  res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
+/* API BENEFICIOS */
 app.get('/api/beneficios', async (req, res) => {
   try {
     const result = await pool.query(
@@ -27,9 +29,7 @@ app.get('/api/beneficios', async (req, res) => {
   }
 })
 
-app.listen(PORT, () => {
-  console.log('Servidor corriendo en puerto ' + PORT)
-})
+/* RESET BASE */
 app.get('/api/reset', async (req, res) => {
   try {
     await pool.query('DELETE FROM beneficios')
@@ -45,4 +45,8 @@ app.get('/api/reset', async (req, res) => {
   } catch (err) {
     res.status(500).send('Error reiniciando base')
   }
+})
+
+app.listen(PORT, () => {
+  console.log('Servidor corriendo en puerto ' + PORT)
 })
