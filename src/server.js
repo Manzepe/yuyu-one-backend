@@ -30,3 +30,19 @@ app.get('/api/beneficios', async (req, res) => {
 app.listen(PORT, () => {
   console.log('Servidor corriendo en puerto ' + PORT)
 })
+app.get('/api/reset', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM beneficios')
+
+    await pool.query(`
+      INSERT INTO beneficios (nombre, activo) VALUES
+      ('Seguro de Pantalla', true),
+      ('Descuentos Locales', true),
+      ('Ahorro en Viajes', true)
+    `)
+
+    res.send('Base reiniciada correctamente')
+  } catch (err) {
+    res.status(500).send('Error reiniciando base')
+  }
+})
