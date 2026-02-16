@@ -1,30 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Yuyu One</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:linear-gradient(135deg,#020617,#0f172a);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#0f172a;
+}
+
+.phone{
+width:380px;
+max-width:92%;
+height:760px;
+background:white;
+border-radius:28px;
+box-shadow:0 40px 120px rgba(0,0,0,.6);
+overflow:hidden;
+position:relative;
+}
+
+.header{
+padding:26px 24px 10px;
+font-size:22px;
+font-weight:800;
+}
+
+.sub{
+padding:0 24px 20px;
+font-size:13px;
+color:#64748b;
+}
+
+.list{
+padding:0 16px;
+}
+
+.card{
+background:#f1f5f9;
+border-radius:14px;
+padding:18px;
+margin-bottom:14px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+background:#e2e8f0;
+}
+
+.screen{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+padding:26px;
+transform:translateX(100%);
+transition:.35s ease;
+overflow:auto;
+}
+
+.screen.active{
+transform:translateX(0);
+}
+
+.back{
+font-size:14px;
+font-weight:600;
+margin-bottom:20px;
+cursor:pointer;
+}
+
+.title{
+font-size:26px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.desc{
+color:#475569;
+margin-bottom:22px;
+}
+
+.feature{
+margin-bottom:12px;
+font-weight:500;
+}
+
+.footer{
+position:absolute;
+bottom:12px;
+width:100%;
+text-align:center;
+font-size:11px;
+color:#94a3b8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="phone">
+
+<div id="home">
+
+<div class="header">Yuyu One</div>
+<div class="sub">Beneficios activos de tu membresía</div>
+
+<div id="beneficios" class="list"></div>
+
+</div>
+
+<div id="detalle" class="screen"></div>
+
+<div class="footer">Sistema conectado</div>
+
+</div>
+
 <script>
 
-const API = "https://yuyu-one-backend.onrender.com/api/beneficios"
+const beneficiosInfo = {
+"Seguro de Pantalla":{
+desc:"Protección inmediata contra daño accidental.",
+items:[
+"Reemplazo rápido",
+"Cobertura nacional",
+"Activación automática con membresía",
+"Sin trámites complicados"
+]
+},
+"Descuentos Locales":{
+desc:"Ahorros exclusivos en comercios afiliados.",
+items:[
+"Restaurantes",
+"Farmacias",
+"Entretenimiento",
+"Compras diarias"
+]
+},
+"Ahorro en Viajes":{
+desc:"Beneficios premium para viajar más pagando menos.",
+items:[
+"Hoteles con tarifa preferencial",
+"Descuentos en vuelos",
+"Asistencia de viaje",
+"Reservas prioritarias"
+]
+}
+}
 
-fetch(API)
-.then(res => res.json())
-.then(data => {
+const home = document.getElementById("home")
+const detalle = document.getElementById("detalle")
+const lista = document.getElementById("beneficios")
 
-  const cont = document.getElementById("contenido")
-  cont.innerHTML = ""
+fetch("/api/beneficios")
+.then(r=>r.json())
+.then(data=>{
 
-  data.forEach(b => {
-    const div = document.createElement("div")
-    div.className = "beneficio"
-    div.textContent = b.nombre
+data.forEach(b=>{
 
-    div.onclick = () => {
-      alert("Beneficio seleccionado:\n\n" + b.nombre)
-    }
+const div=document.createElement("div")
+div.className="card"
+div.textContent=b.nombre
 
-    cont.appendChild(div)
-  })
+div.onclick=()=>mostrarDetalle(b.nombre)
+
+lista.appendChild(div)
 
 })
-.catch(err => {
-  console.error(err)
-  document.getElementById("contenido").innerText = "Error cargando beneficios"
+
 })
+
+function mostrarDetalle(nombre){
+
+const info=beneficiosInfo[nombre]
+
+detalle.innerHTML=`
+<div class="back" onclick="cerrar()">← Volver</div>
+<div class="title">${nombre}</div>
+<div class="desc">${info.desc}</div>
+${info.items.map(i=>`<div class="feature">✔ ${i}</div>`).join("")}
+`
+
+detalle.classList.add("active")
+
+}
+
+function cerrar(){
+detalle.classList.remove("active")
+}
 
 </script>
+
+</body>
+</html>
