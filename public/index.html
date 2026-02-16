@@ -1,90 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yuyu One</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.app {
-  width: 420px;
-  max-width: 90%;
-  background: white;
-  border-radius: 18px;
-  padding: 35px 30px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-  text-align: center;
-}
-
-.logo {
-  font-size: 26px;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 5px;
-}
-
-.subtitle {
-  font-size: 13px;
-  color: #64748b;
-  margin-bottom: 25px;
-}
-
-.beneficio {
-  background: #f1f5f9;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  font-weight: 600;
-  transition: all .25s ease;
-}
-
-.beneficio:hover {
-  background: #e2e8f0;
-  transform: translateY(-2px);
-}
-
-.loading {
-  color: #94a3b8;
-  font-size: 14px;
-}
-
-.footer {
-  margin-top: 20px;
-  font-size: 11px;
-  color: #94a3b8;
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<div class="logo">Yuyu One</div>
-<div class="subtitle">Beneficios activos de tu membresía</div>
-
-<div id="contenido" class="loading">Cargando beneficios...</div>
-
-<div class="footer">Sistema conectado</div>
-
-</div>
-
 <script>
 fetch("/api/beneficios")
 .then(res => res.json())
@@ -97,6 +10,12 @@ fetch("/api/beneficios")
     const div = document.createElement("div")
     div.className = "beneficio"
     div.textContent = b.nombre
+
+    // FUNCIONALIDAD REAL
+    div.onclick = () => {
+      alert("Beneficio seleccionado:\n\n" + b.nombre)
+    }
+
     cont.appendChild(div)
   })
 
@@ -105,6 +24,3 @@ fetch("/api/beneficios")
   document.getElementById("contenido").innerText = "Error cargando beneficios"
 })
 </script>
-
-</body>
-</html>
