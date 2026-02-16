@@ -1,137 +1,110 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="es">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuyu One</title>
 
-  <title>Yuyu One</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+<style>
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  <style>
+.app {
+  width: 420px;
+  max-width: 90%;
+  background: white;
+  border-radius: 18px;
+  padding: 35px 30px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  text-align: center;
+}
 
-    body {
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 5px;
+}
 
-      font-family: Arial, sans-serif;
+.subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 25px;
+}
 
-      background: #f4f6f8;
+.beneficio {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  transition: all .25s ease;
+}
 
-      margin: 0;
+.beneficio:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
 
-      padding: 40px;
+.loading {
+  color: #94a3b8;
+  font-size: 14px;
+}
 
-      text-align: center;
-
-    }
-
-
-
-    .card {
-
-      background: white;
-
-      max-width: 500px;
-
-      margin: auto;
-
-      padding: 30px;
-
-      border-radius: 12px;
-
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-
-    }
-
-
-
-    h1 {
-
-      margin-bottom: 25px;
-
-    }
-
-
-
-    .beneficio {
-
-      background: #eef3ff;
-
-      padding: 12px;
-
-      margin: 10px 0;
-
-      border-radius: 8px;
-
-      font-weight: 500;
-
-    }
-
-
-
-    .loading {
-
-      color: gray;
-
-    }
-
-  </style>
-
+.footer {
+  margin-top: 20px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+</style>
 </head>
-
-
 
 <body>
 
+<div class="app">
 
+<div class="logo">Yuyu One</div>
+<div class="subtitle">Beneficios activos de tu membresía</div>
 
-<div class="card">
+<div id="contenido" class="loading">Cargando beneficios...</div>
 
-  <h1>Beneficios Yuyu One</h1>
-
-  <div id="contenido" class="loading">Cargando beneficios...</div>
+<div class="footer">Sistema conectado</div>
 
 </div>
 
-
-
 <script>
-
-fetch("https://yuyu-one-backend.onrender.com/api/beneficios")
-
+fetch("/api/beneficios")
 .then(res => res.json())
-
 .then(data => {
 
-  const cont = document.getElementById("contenido");
-
-  cont.innerHTML = "";
-
-
+  const cont = document.getElementById("contenido")
+  cont.innerHTML = ""
 
   data.forEach(b => {
-
-    const div = document.createElement("div");
-
-    div.className = "beneficio";
-
-    div.textContent = b.nombre;
-
-    cont.appendChild(div);
-
-  });
+    const div = document.createElement("div")
+    div.className = "beneficio"
+    div.textContent = b.nombre
+    cont.appendChild(div)
+  })
 
 })
-
 .catch(() => {
-
-  document.getElementById("contenido").innerHTML = "Error cargando datos";
-
-});
-
+  document.getElementById("contenido").innerText = "Error cargando beneficios"
+})
 </script>
 
-
-
 </body>
-
 </html>
