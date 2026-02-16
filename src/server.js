@@ -53,3 +53,12 @@ initDB()
 app.listen(PORT, () => {
   console.log('Servidor corriendo en puerto ' + PORT)
 })
+app.get('/api/seed', async (req, res) => {
+  await pool.query(`
+    INSERT INTO beneficios (nombre, activo) VALUES
+    ('Seguro de Pantalla', true),
+    ('Descuentos Locales', true),
+    ('Ahorro en Viajes', true)
+  `)
+  res.send('Datos insertados')
+})
